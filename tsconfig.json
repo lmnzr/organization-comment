@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "outDir": "build",
+    "strict": true,
+    "target": "es5",
+    "module": "commonjs",
+    "sourceMap": true
+  },
+  "exclude": [".vscode", ".git", "node_modules"]
+}
