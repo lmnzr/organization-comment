@@ -2,8 +2,9 @@ import * as bodyParser from "body-parser";
 import * as express from "express";
 import * as helmet from "helmet";
 import * as cors from "cors";
-import * as loggerFactory from "./factory/loggerFactory";
-import routes from "./routes/routes";
+import userRouter from "./routes/users";
+import orgsRouter from "./routes/organizations";
+import { logRequest } from "./middleware/logRequest";
 
 class App {
   public express: express.Application;
@@ -15,7 +16,6 @@ class App {
     this.express = express();
     this.middleware();
     this.routes();
-    this.logger = loggerFactory.createLogger(loggerFactory.Type.API);
   }
 
   // Configure Express middleware.
@@ -24,16 +24,19 @@ class App {
     this.express.use(helmet());
     this.express.use(bodyParser.json());
     this.express.use(bodyParser.urlencoded({ extended: false }));
+    this.express.use(logRequest);
   }
 
   private routes(): void {
-    this.express.get("/", (req, res) => {
-      this.logger.info(`url:::::::${req.url}`);
-      res.send("My API works!!!");
+    this.express.get("/health", (req, res) => {
+      res.send({ s: 200, m: "Server Is Live" });
     });
 
     // user route
-    this.express.use("/", routes);
+    this.express.use("/user", userRouter);
+
+    // orgs route
+    this.express.use("/orgs", orgsRouter);
 
     // handle undefined routes
     this.express.use("*", (req, res) => {

@@ -1,5 +1,5 @@
 class Config {
-  public jwtSecret = "secret";
+  public jwtSecret = process.env.JWT_SECRET as string;
 }
 
 export default new Config();

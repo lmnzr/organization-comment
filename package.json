@@ -1,7 +1,7 @@
 {
   "name": "org-comment",
   "version": "1.0.0",
-  "description": "API Server to Record Comment For Available Github Organization",
+  "description": "API Service to Record Comment For Available Github Organization",
   "main": "build/index.js",
   "scripts": {
     "start": "tsc && node build/index.js",
@@ -9,20 +9,25 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "./node_modules/.bin/eslint src/** --ext .ts,.tsx",
     "lint:fix": "npm run lint --fix",
-    "git:commit": "git add . && git commit -m", 
-    "git:push": "git push --all"
+    "git:commit": "git add . && git commit -m",
+    "git:push": "git push --all",
+    "migrate": "./node_modules/.bin/node-pg-migrate"
   },
   "keywords": [
     "coding",
     "node",
-    "js" 
+    "js"
   ],
   "author": "Almas Hilman Muhtadi",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lmnzr/organization-comment"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "pre-push" : "npm run --silent lint"
+      "pre-push": "npm run --silent lint"
     }
   },
   "lint-staged": {
@@ -34,15 +39,17 @@
   "dependencies": {
     "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
+    "connection-string-parser": "^1.0.2",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "helmet": "^3.20.1",
     "jsonwebtoken": "^8.5.1",
+    "node-pg-migrate": "^3.22.0",
     "path": "^0.12.7",
-    "winston": "^3.2.1",
-    "pg": "^7.9.0",
+    "pg": "^7.12.1",
     "sql-template-strings": "^2.2.2",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.2",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "@types/body-parser": "^1.17.1",

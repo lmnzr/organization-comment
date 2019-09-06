@@ -38,8 +38,9 @@ class LoggerFactory {
             colorize(),
             timestamp(),
             printf(info => {
-              return `${info.timestamp} 
-              [${info.level}-${type}] : ${JSON.stringify(info.message)}`;
+              return `${info.timestamp}::[${
+                info.level
+              }-${type}]:${JSON.stringify(info.message)}`;
             })
           )
         })
