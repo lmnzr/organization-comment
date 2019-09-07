@@ -1,7 +1,7 @@
-import { Request, Response, Router } from "express";
+import { Router } from "express";
 import * as jwtUtils from "../utils/jwt";
-import { jwtVerify } from "../middleware/jwtVerify";
 import * as user from "../models/users";
+import * as logger from "../logger/logger";
 
 const userRouter = Router();
 
@@ -18,19 +18,50 @@ const createToken = (uuid: string, email: string): any => {
   }
 };
 
-userRouter.get("/accesstoken/uuid/:uuid/email/:email", async (req, res) => {
+userRouter.get("/accesstoken/uuid/:uuid/email/:email/", async (req, res) => {
   try {
     await user.validate(req.params.uuid, req.params.email);
     const response = await createToken(req.params.uuid, req.params.email);
     res.send(response);
   } catch (err) {
+    logger.apiError({ error: err.message });
+    res.status(401);
+    res.send({ error: err.message });
+  }
+});
+
+userRouter.post("/admin/register/", async (req, res) => {
+  try {
+    res.send(
+      await user.createUser(
+        req.body.name,
+        req.body.email,
+        req.body.password,
+        true
+      )
+    );
+  } catch (err) {
+    logger.apiError({ error: err.message });
     res.status(500);
     res.send({ error: err.message });
   }
 });
 
-userRouter.post("/createadmin", async (req, res) => {
-  
+userRouter.post("/member/register/", async (req, res) => {
+  try {
+    res.send(
+      await user.createUser(
+        req.body.name,
+        req.body.email,
+        req.body.password,
+        false
+      )
+    );
+  } catch (err) {
+    logger.apiError({ error: err.message });
+    res.status(500);
+    res.send({ error: err.message });
+  }
 });
 
 export default userRouter;

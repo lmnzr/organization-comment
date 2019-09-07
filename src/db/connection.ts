@@ -1,9 +1,9 @@
 import { Pool } from "pg";
 import { ConnectionStringParser } from "connection-string-parser";
 
-export default class Db {
+export default class Connection {
   public connection: Pool;
-  private static instance: Db;
+  private static instance: Connection;
 
   private constructor() {
     const connectionObj: any = this.parse(process.env.DATABASE_URL as string);
@@ -17,11 +17,11 @@ export default class Db {
   }
 
   public static getConnection(): Pool {
-    if (!Db.instance) {
-      Db.instance = new Db();
+    if (!Connection.instance) {
+      Connection.instance = new Connection();
     }
 
-    return Db.instance.connection;
+    return Connection.instance.connection;
   }
 
   private parse(conString: string): any {

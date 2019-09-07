@@ -11,5 +11,6 @@ export const logRequest = (req: Request, res: Response, next: NextFunction) => {
     requestHeader: req.headers
   };
   logger.apiInfo(message);
+
   next();
 };

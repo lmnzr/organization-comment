@@ -19,7 +19,7 @@ exports.up = pgm => {
     
     pgm.createTable("comments", {
       id: "id",
-      name: { type: "varchar(100)", notNull: true },
+      email: { type: "varchar(100)", notNull: true },
       organization: { type: "varchar(100)", notNull: true },
       comment: { type: "text", notNull: true },
       createdAt: {

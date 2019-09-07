@@ -9,7 +9,10 @@ services:
       DATABASE_URL: postgres://${PG_SQL_USERNAME}:${PG_SQL_PASSWORD}@postgres:5432/${PG_SQL_DATABASE}
       NODE_ENV: ${NODE_ENV}
       JWT_SECRET: ${JWT_SECRET}
-      PORT: 3000
+      GITHUB_USERNAME: ${GITHUB_USERNAME}
+      GITHUB_PASSWORD: ${GITHUB_PASSWORD}
+      PASSWORD_SALT: ${PASSWORD_SALT}
+      NODE_PORT: 3000
     ports:
       - "${SERVER_PORT}:3000"
     command: npm run dev
@@ -18,7 +21,7 @@ services:
       - /app/node_modules
 
   postgres:
-    image: postgres:10.4
+    image:n postgres:10.4
     ports:
       - "${PG_SQL_PORT}:5432"
     environment:

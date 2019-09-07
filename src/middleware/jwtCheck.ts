@@ -2,9 +2,8 @@ import { Request, Response, NextFunction } from "express";
 import * as jwt from "jsonwebtoken";
 import config from "../config/config";
 import * as jwtUtils from "../utils/jwt";
-import * as logger from "../logger/logger";
 
-export const jwtVerify = (
+export const jwtCheck = (
   req: Request,
   res: Response,
   next: NextFunction
@@ -20,21 +19,16 @@ export const jwtVerify = (
   try {
     jwtPayload = jwt.verify(token, config.jwtSecret) as jwtUtils.Payload;
     res.locals.jwtPayload = jwtPayload;
+
+    const newToken = jwtUtils.createJwt(jwtPayload);
+    req.params.uuid = jwtPayload.uuid;
+    req.params.email = jwtPayload.email;
+    res.setHeader("token", newToken);
   } catch (error) {
-    logger.serverError(error.message);
-    //If token is not valid, respond with 401 (unauthorized)
-    res.status(401).send({error:"unauthorized access"});
-    return;
+    //If token is not valid, use anonymous
+    req.params.uuid = "";
+    req.params.email = "anonymous";
   }
 
-  //The token is valid for 1 hour
-  //We want to send a new token on every request
-
-  const newToken = jwtUtils.createJwt(jwtPayload);
-  req.params.uuid = jwtPayload.uuid;
-  req.params.email = jwtPayload.email;
-  res.setHeader("token", newToken);
-
-  //Call the next middleware or controller
   next();
 };

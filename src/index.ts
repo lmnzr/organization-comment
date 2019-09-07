@@ -1,9 +1,9 @@
 import * as http from "http";
 import app from "./app";
 import * as logger from "./logger/logger";
-import db from "./db/db";
+import db from "./db/connection";
 
-const port = process.env.PORT || 8080;
+const port = process.env.NODE_PORT || 8080;
 
 app.set("port", port);
 const server = http.createServer(app);
