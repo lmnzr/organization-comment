@@ -33,6 +33,10 @@ $ npm run docker
 $ npm run docker:test
 ```
 
+### Documentation
+
+[Api Documentation is available at](https://organizationcomment.docs.apiary.io/#)
+
 ## License
 
 ISC
