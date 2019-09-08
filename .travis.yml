@@ -5,7 +5,7 @@ before_install:
   - cp example.env .env
 
 install:
-  - npm run build
+  - npm run docker:build
 
 script:
-  - npm test
+  - npm run docker:test
