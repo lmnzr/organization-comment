@@ -3,10 +3,10 @@ import db from "../../../src/db/connection";
 import * as dbcon from "../../../src/db/query";
 
 describe("Database Query", () => {
-  // test("connected to DB", async done => {
-  //   expect(await db.getConnection().connect()).not.toThrow;
-  //   done();
-  // });
+  test("connected to DB", async done => {
+    expect(await db.getConnection().connect()).not.toThrow;
+    done();
+  });
 
   test("query with parameter", async done => {
     const user: any = await dbcon.queryWithParam(
