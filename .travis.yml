@@ -8,4 +8,4 @@ install:
   - npm run docker:build
 
 script:
-  - npm run docker:test
+  - npm run docker:test --detectOpenHandles
