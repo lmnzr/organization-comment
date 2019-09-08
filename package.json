@@ -4,9 +4,9 @@
   "description": "API Service to Record Comment For Available Github Organization",
   "main": "build/index.js",
   "scripts": {
-    "docker":"",
-    "docker:test" : "docker-compose -f ./docker-compose.test.yml up --build --abort-on-container-exit",
-    "docker:build" : "docker-compose build",
+    "docker": "",
+    "docker:test": "docker-compose -f ./docker-compose.test.yml up --build --abort-on-container-exit",
+    "docker:build": "docker-compose build",
     "start": "tsc && npm run migrate up && node build/index.js",
     "dev": "node ./node_modules/nodemon/bin/nodemon.js",
     "test": "npm run migrate up && jest",
