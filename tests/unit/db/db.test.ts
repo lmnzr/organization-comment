@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import db from "../../../src/db/connection";
 import * as dbcon from "../../../src/db/query";
 
 describe("Database Query", () => {
