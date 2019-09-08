@@ -4,7 +4,11 @@ import * as dbcon from "../../../src/db/query";
 
 describe("Database Query", () => {
   test("connected to DB", async done => {
-    expect(await db.getConnection().connect()).not.toThrow;
+    const con = await db.getConnection().connect();
+    expect(con).not.toThrow;
+
+    con.off;
+
     done();
   });
 
