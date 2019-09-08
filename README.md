@@ -4,7 +4,7 @@ This is a simple API allowing member/nonmember user to write comment on availabl
 
 ### Tech
 
-My App uses a number of open source projects to work properly:
+My App uses a number of technology/library to work properly:
 
 - [NodeJS] - evented I/O for the backend
 - [Typesript] - typed superset of JavaScript that compiles to plain JavaScript.
@@ -12,10 +12,11 @@ My App uses a number of open source projects to work properly:
 - [Axios] - promise based HTTP client.
 - [PostgreSQL] - open source object-relational. database system
 - [Winston] - logger for just about everything.
-- [JSON Web Token] - open, industry standard for representing claims securely between two parties.
+- [JWT] - open, industry standard for representing claims securely between two parties.
 - [Jest] - javaScript testing framework with a focus on simplicity
 - [Supertest] - provides an easy-to-use API to send HTTP requests in Node.
-- [Github API] - API to access data from github.
+- [GithubAPI] - API to access data from github.
+- [Docker] - Containerize our application.
 
 ## Setup
 
@@ -35,7 +36,7 @@ $ npm run docker:test
 
 ### Documentation
 
-[Api Documentation is available at](https://organizationcomment.docs.apiary.io/#)
+[Api Documentation is available here](https://organizationcomment.docs.apiary.io/#)
 
 ## License
 

@@ -13,7 +13,8 @@
     "docker-compose.yml",
     ".gitignore",
     ".env",
-    ".env.example",
-    "Dockerfile"
+    "example.env",
+    "Dockerfile",
+    "tests"
   ]
 }

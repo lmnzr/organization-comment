@@ -1,0 +1,11 @@
+services: docker
+
+before_install:
+  - docker -v
+  - cp example.env .env
+
+install:
+  - npm run build
+
+script:
+  - npm test

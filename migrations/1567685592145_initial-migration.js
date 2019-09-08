@@ -5,7 +5,7 @@ exports.up = pgm => {
       id: "id",
       uuid: { type: "uuid", notNull: true },
       name: { type: "varchar(100)", notNull: true },
-      email: { type: "varchar(50)", notNull: true },
+      email: { type: "varchar(50)", notNull: true,unique:true },
       password: { type: "varchar(100)", notNull: true },
       isadmin: { type: "bool", notNull: true },
       createdAt: {

@@ -2,5 +2,5 @@ node_modules
 build
 dist
 log
-.env.example
+example.env
 .vscode
