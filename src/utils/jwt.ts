@@ -8,7 +8,6 @@ export interface Payload {
 
 export const createJwt = (payload: Payload): string => {
   const { uuid, email } = payload;
-  console.log(config.jwtSecret);
   return jwt.sign({ uuid, email }, config.jwtSecret, {
     expiresIn: "1h"
   });

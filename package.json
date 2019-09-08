@@ -11,6 +11,7 @@
     "lint:fix": "npm run lint --fix",
     "git:commit": "git add . && git commit -m",
     "git:push": "git push --all",
+    "git:pull": "git pull",
     "migrate": "./node_modules/.bin/node-pg-migrate"
   },
   "keywords": [

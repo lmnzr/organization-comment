@@ -4,14 +4,17 @@ import config from "../config/config";
 import * as uuidUtils from "uuid";
 import * as bcrypt from "bcrypt";
 
-export const validate = async (uuid: string, email: string) => {
+export const validate = async (email: string, password: string) => {
   const { rows } = await db.queryWithParam(
-    "SELECT * FROM users WHERE uuid=$1;",
-    [uuid]
+    "SELECT * FROM users WHERE email=$1;",
+    [email]
   );
   const user: any = rows[0];
-  if (user.email !== email) {
-    throw Error("invalid request");
+  const valid = await bcrypt.compare(password, user.password);
+  if (!valid) {
+    throw Error("invalid user");
+  } else {
+    return user;
   }
 };
 
@@ -21,7 +24,7 @@ export const createUser = async (
   password: string,
   isadmin: boolean
 ) => {
-  const hashedPassword = await bcrypt.hash(password, config.salt);
+  const hashedPassword = await bcrypt.hash(password, config.salt as number);
   const uuid = await uuidUtils.v4();
 
   const { rows } = await db.queryWithParam(

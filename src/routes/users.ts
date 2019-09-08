@@ -18,10 +18,26 @@ const createToken = (uuid: string, email: string): any => {
   }
 };
 
-userRouter.get("/accesstoken/uuid/:uuid/email/:email/", async (req, res) => {
+userRouter.post("/accesstoken/", async (req, res) => {
   try {
-    await user.validate(req.params.uuid, req.params.email);
-    const response = await createToken(req.params.uuid, req.params.email);
+    if (!req.body.email) {
+      throw new Error("only allowed using user email");
+    }
+    if (!req.body.password) {
+      throw new Error("only allowed using user password");
+    }
+  } catch (err) {
+    logger.apiError({ error: err.message });
+    res.status(400);
+    res.send({ error: err.message });
+  }
+
+  try {
+    const userData: any = await user.validate(
+      req.body.email,
+      req.body.password
+    );
+    const response = await createToken(userData.uuid, userData.email);
     res.send(response);
   } catch (err) {
     logger.apiError({ error: err.message });
@@ -31,6 +47,22 @@ userRouter.get("/accesstoken/uuid/:uuid/email/:email/", async (req, res) => {
 });
 
 userRouter.post("/admin/register/", async (req, res) => {
+  try {
+    if (!req.body.email) {
+      throw new Error("only allowed using user email");
+    }
+    if (!req.body.password) {
+      throw new Error("only allowed using user password");
+    }
+    if (!req.body.named) {
+      throw new Error("only allowed using user name");
+    }
+  } catch (err) {
+    logger.apiError({ error: err.message });
+    res.status(400);
+    res.send({ error: err.message });
+  }
+
   try {
     res.send(
       await user.createUser(
@@ -48,6 +80,22 @@ userRouter.post("/admin/register/", async (req, res) => {
 });
 
 userRouter.post("/member/register/", async (req, res) => {
+  try {
+    if (!req.body.email) {
+      throw new Error("only allowed using user email");
+    }
+    if (!req.body.password) {
+      throw new Error("only allowed using user password");
+    }
+    if (!req.body.named) {
+      throw new Error("only allowed using user name");
+    }
+  } catch (err) {
+    logger.apiError({ error: err.message });
+    res.status(400);
+    res.send({ error: err.message });
+  }
+
   try {
     res.send(
       await user.createUser(

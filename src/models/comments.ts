@@ -16,7 +16,7 @@ export const insertComment = async (
 
 export const listComment = async (organization: string) => {
   const { rows } = await db.queryWithParam(
-    "SELECT * FROM comments WHERE organization=$1 AND isdeleted='false';",
+    "SELECT * FROM comments WHERE organization=$1 AND isdeleted='false' ORDER BY \"createdAt\" DESC LIMIT 100;",
     [organization]
   );
   const comments: any = rows;

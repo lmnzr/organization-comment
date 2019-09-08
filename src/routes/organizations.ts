@@ -19,6 +19,10 @@ orgsRouter.post(
       res.status(500).send({ error: "invalid organization" });
     }
     try {
+      if (!req.body.comment) {
+        throw new Error("only allowed using comment");
+      }
+
       const row = await model.insertComment(
         req.params.email,
         req.params.org,
