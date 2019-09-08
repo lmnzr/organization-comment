@@ -24,7 +24,7 @@ My App uses a number of technology/library to work properly:
 
 The App requires `npm > v6.0` to run.
 Before running makesure to setup `.env` file.
-I include `example.env`do file as an example.
+I include `example.env` file as an example.
 
 ### Setup Application In Docker
 
