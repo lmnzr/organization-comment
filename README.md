@@ -1,6 +1,7 @@
 ﻿# Organization Comments
 
-[![Build Status](https://travis-ci.com/lmnzr/organization-comment.svg?branch=master)](https://travis-ci.com/lmnzr/organization-comment)
+[![Build Status](https://api.travis-ci.com/lmnzr/organization-comment.svg?token=U6NUxWGyY1isYgsiJZkU&branch=master)](https://travis-ci.com/lmnzr/organization-comment)
+
 This is a simple API allowing member/nonmember user to write comment on available Github Organization.
 
 ### Tech
