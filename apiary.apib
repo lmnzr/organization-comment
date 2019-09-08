@@ -1,80 +1,217 @@
 FORMAT: 1A
-HOST: http://polls.apiblueprint.org/
+HOST: http://comment.app/
 
-# Organization
+# Organization Comments
+This is a simple API allowing member/nonmember user to write comment on available Github Organization.
 
-Polls is a simple API allowing consumers to view polls and vote in them.
-
-## Questions Collection [/questions]
-
-### List All Questions [GET]
-
-+ Response 200 (application/json)
-
-        [
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
-            }
-        ]
-
-### Create a New Question [POST]
-
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
+## Administrator Register [/user/admin/register/]
+### Register Admin User [POST]
+Register an Admin level user. The admin level user is 
+authorized to delete comments.
 
 + Request (application/json)
 
         {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
-            ]
+            "name":"admin",
+            "email":"admin@system.com",
+            "password":"root"
         }
 
-+ Response 201 (application/json)
++ Response 200 (application/json)
 
+        {
+            "id": 1
+        }
+        
+
+## Member Register [/user/member/register/]
+### Register Member User [POST]
+Register a Member level user. Necessary if you don't
+want to write a comment as anonymous.
+
++ Request (application/json)
+
+        {
+            "name":"member",
+            "email":"member@system.com",
+            "password":"root"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "id": 2
+        }
+        
+        
+## Acces [/user/accesstoken/]
+### Get User Access Token [POST]
+Retrieve authentication user access token by providing valid username and password
+
++ Request (application/json)
+
+        {
+            "email":"member@system.com",
+            "password":"root"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiYTU2Nzg0MzgtMzhkNi0xMWU5LWIxY2EtN2QxNjg1ZGVhYmNlIiwiZW1haWwiOiJhZG1pbkBzeXN0ZW0uY29tIiwiaWF0IjoxNTY3OTAwMzYzLCJleHAiOjE1Njc5MDM5NjN9.YQyLg4o8cCCu5P0m3CM_esb1XHjeDA83H_58qaFz1D4"
+        }
+        
+## Organization List [/orgs/list?since={since}&per_page={per_page}]
++ Parameters
+    + since (string) - list organizations since the last given id
+    + per_page (integer) - number of entry requested
+
+### Retrieve List [POST]
+Retrieve list of available organization from Github.
+
+
++ Response 200 (application/json)
+
+        {
+            "data": [
+                {
+                    "login": "ministrycentered",
+                    "id": 119,
+                    "node_id": "MDEyOk9yZ2FuaXphdGlvbjExOQ==",
+                    "url": "https://api.github.com/orgs/ministrycentered",
+                    "repos_url": "https://api.github.com/orgs/ministrycentered/repos",
+                    "events_url": "https://api.github.com/orgs/ministrycentered/events",
+                    "hooks_url": "https://api.github.com/orgs/ministrycentered/hooks",
+                    "issues_url": "https://api.github.com/orgs/ministrycentered/issues",
+                    "members_url": "https://api.github.com/orgs/ministrycentered/members{/member}",
+                    "public_members_url": "https://api.github.com/orgs/ministrycentered/public_members{/member}",
+                    "avatar_url": "https://avatars0.githubusercontent.com/u/119?v=4",
+                    "description": ""
+                },
+                {
+                    "login": "collectiveidea",
+                    "id": 128,
+                    "node_id": "MDEyOk9yZ2FuaXphdGlvbjEyOA==",
+                    "url": "https://api.github.com/orgs/collectiveidea",
+                    "repos_url": "https://api.github.com/orgs/collectiveidea/repos",
+                    "events_url": "https://api.github.com/orgs/collectiveidea/events",
+                    "hooks_url": "https://api.github.com/orgs/collectiveidea/hooks",
+                    "issues_url": "https://api.github.com/orgs/collectiveidea/issues",
+                    "members_url": "https://api.github.com/orgs/collectiveidea/members{/member}",
+                    "public_members_url": "https://api.github.com/orgs/collectiveidea/public_members{/member}",
+                    "avatar_url": "https://avatars2.githubusercontent.com/u/128?v=4",
+                    "description": "We build software to solve real problems."
+                }
+            ]
+        }
+        
+## Organization Comment [/orgs/{organization}/comments/]
++ Parameters
+    + organization (string) - valid available github organization
+
+### Post Comment Member [POST]
+Write a comment on available github organization as a member.
+Access token is required in Authorization Header.
+
++ Request (application/json)
     + Headers
-
-            Location: /questions/2
-
+    
+            Authorization: Bearer Token
+        
     + Body
 
             {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
-                    }
-                ]
+                "comment":"Hello World"
             }
+        
++ Response 200 (application/json)
+
+        {
+            "id": 1
+        }
+
+### Post Comment Anonymous [POST]
+Write a comment on available github organization anonymously.
+
++ Request (application/json)
+    
+        {
+            "comment":"Hello World"
+        }
+        
++ Response 200 (application/json)
+
+        {
+            "id": 1
+        }
+
+### Retrieve Comment List [GET]
+Retrieve all comments on github organization.
+        
++ Response 200 (application/json)
+
+        {
+            "data": [
+                {
+                    "email": "anonymous",
+                    "organization": "vuejs",
+                    "comment": "good job",
+                    "createdAt": "2019-09-08T00:11:41.687Z"
+                },
+                {
+                    "email": "admin@system.com",
+                    "organization": "vuejs",
+                    "comment": "thanks for your support",
+                    "createdAt": "2019-09-08T00:10:41.687Z"
+                }
+            ]
+        }
+        
+### Delete Comments [DELETE]
+Delete all comments related to github organization. 
+Only allowed using admin access token.
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer Token
+        
+        
++ Response 200 (application/json)
+
+        {
+            "affected_rows": 10
+        }
+
+## Organization Member [/orgs/{organization}/members?page={page}&per_page={per_page}/]
++ Parameters
+    + page (integer) - page number
+    + per_page (integer) - number of entry per page
+    
+### Retrieve Member [GET]
+Retrieve list of github organization members. Sorted descendingly by number of followers.
+
++ Response 200 (application/json)
+
+        {
+            "data": [
+                {
+                    "login": "egoist",
+                    "avatar_url": "https://avatars2.githubusercontent.com/u/8784712?v=4",
+                    "followers": 6351,
+                    "following": 36
+                },
+                {
+                    "login": "chrisvfritz",
+                    "avatar_url": "https://avatars2.githubusercontent.com/u/2327556?v=4",
+                    "followers": 2658,
+                    "following": 2
+                },
+                {
+                    "login": "Akryum",
+                    "avatar_url": "https://avatars0.githubusercontent.com/u/2798204?v=4",
+                    "followers": 2316,
+                    "following": 16
+                }
+            ]
+        }
