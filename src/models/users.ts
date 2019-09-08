@@ -16,12 +16,18 @@ export const validate = async (email: string, password: string) => {
       [email]
     );
     const user: any = rows[0];
-    const valid = await bcrypt.compare(password, user.password);
-    if (!valid) {
-      throw Error("invalid user");
-    } else {
-      return user;
+    if(user){
+      const valid = await bcrypt.compare(password, user.password);
+      if (!valid) {
+        throw Error("invalid password");
+      } else {
+        return user;
+      }
     }
+    else{
+      throw Error("invalid email");
+    }
+    
   }
 };
 

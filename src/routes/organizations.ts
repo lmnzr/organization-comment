@@ -14,24 +14,24 @@ orgsRouter.post(
   async (req: Request, res: Response) => {
     try {
       await org.getOrganization(req.params.org);
+      try {
+        if (!req.body.comment) {
+          throw new Error("only allowed using comment");
+        }
+
+        const row = await model.insertComment(
+          req.params.email,
+          req.params.org,
+          req.body.comment
+        );
+        res.send(row);
+      } catch (err) {
+        logger.apiError({ error: err.message });
+        res.status(500).send({ error: err.message });
+      }
     } catch (err) {
       logger.apiError({ error: "invalid organization" });
       res.status(500).send({ error: "invalid organization" });
-    }
-    try {
-      if (!req.body.comment) {
-        throw new Error("only allowed using comment");
-      }
-
-      const row = await model.insertComment(
-        req.params.email,
-        req.params.org,
-        req.body.comment
-      );
-      res.send(row);
-    } catch (err) {
-      logger.apiError({ error: err.message });
-      res.status(500).send({ error: err.message });
     }
   }
 );
