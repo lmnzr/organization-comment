@@ -6,5 +6,14 @@
     "module": "commonjs",
     "sourceMap": true
   },
-  "exclude": [".vscode", ".git", "node_modules"]
+  "exclude": [
+    ".vscode",
+    ".git",
+    "node_modules",
+    "docker-compose.yml",
+    ".gitignore",
+    ".env",
+    ".env.example",
+    "Dockerfile"
+  ]
 }

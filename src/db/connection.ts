@@ -12,7 +12,7 @@ export default class Connection {
       host: connectionObj.hosts[0].host,
       user: connectionObj.username,
       password: connectionObj.password,
-      database: connectionObj.scheme
+      database: connectionObj.endpoint
     });
   }
 

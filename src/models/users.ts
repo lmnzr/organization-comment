@@ -5,16 +5,23 @@ import * as uuidUtils from "uuid";
 import * as bcrypt from "bcrypt";
 
 export const validate = async (email: string, password: string) => {
-  const { rows } = await db.queryWithParam(
-    "SELECT * FROM users WHERE email=$1;",
-    [email]
-  );
-  const user: any = rows[0];
-  const valid = await bcrypt.compare(password, user.password);
-  if (!valid) {
-    throw Error("invalid user");
+  if (!email) {
+    throw Error("only allowed using user email");
+  }
+  if (!password) {
+    throw Error("only allowed using user password");
   } else {
-    return user;
+    const { rows } = await db.queryWithParam(
+      `SELECT * FROM "users" WHERE "email"=$1;`,
+      [email]
+    );
+    const user: any = rows[0];
+    const valid = await bcrypt.compare(password, user.password);
+    if (!valid) {
+      throw Error("invalid user");
+    } else {
+      return user;
+    }
   }
 };
 
@@ -24,13 +31,23 @@ export const createUser = async (
   password: string,
   isadmin: boolean
 ) => {
-  const hashedPassword = await bcrypt.hash(password, config.salt as number);
-  const uuid = await uuidUtils.v4();
+  if (!email) {
+    throw Error("only allowed using user email");
+  }
+  if (!password) {
+    throw Error("only allowed using user password");
+  }
+  if (!name) {
+    throw Error("only allowed using user name");
+  } else {
+    const hashedPassword = await bcrypt.hash(password, config.salt as number);
+    const uuid = await uuidUtils.v4();
 
-  const { rows } = await db.queryWithParam(
-    "INSERT INTO users(uuid,name,email,password,isadmin) VALUES ($1,$2,$3,$4,$5) RETURNING id;",
-    [uuid, name, email, hashedPassword, isadmin]
-  );
-  const [row] = rows;
-  return row;
+    const { rows } = await db.queryWithParam(
+      `INSERT INTO "users" ("uuid","name","email","password","isadmin") VALUES ($1,$2,$3,$4,$5) RETURNING "id";`,
+      [uuid, name, email, hashedPassword, isadmin]
+    );
+    const [row] = rows;
+    return row;
+  }
 };
