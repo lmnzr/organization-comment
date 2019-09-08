@@ -1,6 +1,4 @@
 import { Request, Response, NextFunction } from "express";
-import * as jwt from "jsonwebtoken";
-import config from "../config/config";
 import * as jwtUtils from "../utils/jwt";
 import * as logger from "../logger/logger";
 
@@ -18,12 +16,12 @@ export const jwtVerify = (
 
   //Try to validate the token and get data
   try {
-    jwtPayload = jwt.verify(token, config.jwtSecret) as jwtUtils.Payload;
+    jwtPayload = jwtUtils.verifyJwt(token);
     res.locals.jwtPayload = jwtPayload;
   } catch (error) {
     logger.serverError(error.message);
     //If token is not valid, respond with 401 (unauthorized)
-    res.status(401).send({error:"unauthorized access"});
+    res.status(401).send({ error: "unauthorized access" });
     return;
   }
 

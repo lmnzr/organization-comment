@@ -12,3 +12,7 @@ export const createJwt = (payload: Payload): string => {
     expiresIn: "1h"
   });
 };
+
+export const verifyJwt = (token: string): Payload => {
+  return jwt.verify(token, config.jwtSecret) as Payload;
+};

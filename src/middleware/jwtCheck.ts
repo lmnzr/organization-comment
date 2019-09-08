@@ -1,6 +1,4 @@
 import { Request, Response, NextFunction } from "express";
-import * as jwt from "jsonwebtoken";
-import config from "../config/config";
 import * as jwtUtils from "../utils/jwt";
 
 export const jwtCheck = (
@@ -17,7 +15,7 @@ export const jwtCheck = (
 
   //Try to validate the token and get data
   try {
-    jwtPayload = jwt.verify(token, config.jwtSecret) as jwtUtils.Payload;
+    jwtPayload = jwtUtils.verifyJwt(token);
     res.locals.jwtPayload = jwtPayload;
 
     const newToken = jwtUtils.createJwt(jwtPayload);
