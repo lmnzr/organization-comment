@@ -2,7 +2,6 @@ services: docker
 
 before_install:
   - docker -v
-  - cp example.env .env
 
 install:
   - npm run docker:build
