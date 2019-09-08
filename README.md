@@ -18,19 +18,21 @@ My App uses a number of technology/library to work properly:
 - [Jest] - javaScript testing framework with a focus on simplicity
 - [Supertest] - provides an easy-to-use API to send HTTP requests in Node.
 - [GithubAPI] - API to access data from github.
-- [Docker] - Containerize our application.
+- [Docker] - Containerized our application.
 
 ## Setup
 
-The App requires [npm] > v6.0 to run.
+The App requires `npm > v6.0` to run.
+Before running makesure to setup `.env` file.
+I include `example.env`do file as an example.
 
-### Setup Docker
+### Setup Application In Docker
 
 ```
-$ npm run docker
+$ npm run docker:up
 ```
 
-### Test Docker
+### Run Test In Docker
 
 ```
 $ npm run docker:test
