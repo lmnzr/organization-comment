@@ -3,15 +3,6 @@ import db from "../../../src/db/connection";
 import * as dbcon from "../../../src/db/query";
 
 describe("Database Query", () => {
-  test("connected to DB", async done => {
-    const con = await db.getConnection().connect();
-    expect(con).not.toThrow;
-
-    con.off;
-
-    done();
-  });
-
   test("query with parameter", async done => {
     const user: any = await dbcon.queryWithParam(
       `SELECT * FROM "users" WHERE "email" = $1`,
